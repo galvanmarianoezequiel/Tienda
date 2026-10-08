@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MGE Shop | Streaming & Cuentas Premium</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #090a0f;
+      --card-bg: rgba(18, 20, 29, 0.85);
+      --border: rgba(255, 255, 255, 0.08);
+      --accent: #5865f2;
+      --accent-glow: rgba(88, 101, 242, 0.35);
+      --net: #e50914;
+      --hbo: #9933ff;
+      --disney: #00d2ff;
+      --text: #f0f2f5;
+      --subtext: #8d95a5;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem 1rem;
+      background-image: 
+        radial-gradient(circle at 10% 20%, rgba(88, 101, 242, 0.12) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(153, 51, 255, 0.12) 0%, transparent 40%);
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+
+    .logo-container {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 0.8rem;
+    }
+
+    .brand-title {
+      font-size: 2.8rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #fff 30%, var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -1px;
+    }
+
+    .badge-top {
+      background: rgba(88, 101, 242, 0.15);
+      color: #838eff;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      border: 1px solid rgba(88, 101, 242, 0.3);
+      display: inline-block;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 320px));
+      gap: 1.8rem;
+      width: 100%;
+      max-width: 1100px;
+      justify-content: center;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 1.8rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      backdrop-filter: blur(10px);
+    }
+
+    .card:hover {
+      transform: translateY(-8px);
+      border-color: rgba(88, 101, 242, 0.5);
+      box-shadow: 0 12px 30px var(--accent-glow);
+    }
+
+    .card-badge {
+      position: absolute;
+      top: -12px;
+      right: 20px;
+      background: linear-gradient(135deg, var(--accent), #838eff);
+      color: #fff;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 12px;
+      text-transform: uppercase;
+    }
+
+    .tag-proximamente {
+      background: linear-gradient(135deg, #ff9900, #ff5500);
+    }
+
+    .service-title {
+      font-size: 1.6rem;
+      font-weight: 800;
+      margin-bottom: 0.4rem;
+    }
+
+    .service-title.net { color: var(--net); }
+    .service-title.hbo { color: var(--hbo); }
+    .service-title.disney { color: var(--disney); }
+    .service-title.combo { background: linear-gradient(90deg, var(--net), var(--hbo)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+    .price {
+      font-size: 2.2rem;
+      font-weight: 800;
+      margin: 1rem 0;
+      color: #fff;
+    }
+
+    .price span {
+      font-size: 0.9rem;
+      color: var(--subtext);
+      font-weight: 400;
+    }
+
+    .features {
+      list-style: none;
+      margin-bottom: 1.5rem;
+    }
+
+    .features li {
+      margin-bottom: 0.6rem;
+      color: var(--subtext);
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .features li::before {
+      content: "✓";
+      color: #00ff88;
+      font-weight: bold;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 12px;
+      background: var(--accent);
+      color: white;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+    }
+
+    .btn:hover {
+      background: #4752c4;
+      transform: scale(1.02);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    /* Modal Checkout */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(8px);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      padding: 1rem;
+    }
+
+    .modal-card {
+      background: #131622;
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      width: 100%;
+      max-width: 440px;
+      padding: 2rem;
+      position: relative;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 18px;
+      right: 20px;
+      background: none;
+      border: none;
+      color: var(--subtext);
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    .alias-box {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px dashed rgba(255, 255, 255, 0.2);
+      border-radius: 12px;
+      padding: 1rem;
+      text-align: center;
+      margin: 1.2rem 0;
+    }
+
+    .alias-title {
+      font-size: 0.8rem;
+      color: var(--subtext);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .alias-value {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: #00ff88;
+      margin: 4px 0;
+    }
+
+    .file-input-wrapper {
+      margin-top: 1rem;
+    }
+
+    .file-input-wrapper input[type="file"] {
+      display: none;
+    }
+
+    .file-label {
+      display: block;
+      padding: 12px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      text-align: center;
+      cursor: pointer;
+      color: var(--subtext);
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+
+    .file-label:hover {
+      background: rgba(255,255,255,0.08);
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo-container">
+      <h1 class="brand-title">MGE Shop</h1>
+    </div>
+    <br>
+    <span class="badge-top">Servicio de Cuentas Premium 100% Seguras</span>
+  </header>
+
+  <div class="grid">
+    <!-- Netflix -->
+    <div class="card">
+      <div>
+        <h2 class="service-title net">Netflix</h2>
+        <div class="price">$5.000 <span>/ mes</span></div>
+        <ul class="features">
+          <li>1 Dispositivo en uso</li>
+          <li>Calidad Ultra HD 4K</li>
+          <li>Garantía de servicio activa</li>
+        </ul>
+      </div>
+      <button class="btn" onclick="openModal('Netflix', 5000)">Comprar Ahora</button>
+    </div>
+
+    <!-- HBO Max -->
+    <div class="card">
+      <div>
+        <h2 class="service-title hbo">Max (HBO)</h2>
+        <div class="price">$5.000 <span>/ mes</span></div>
+        <ul class="features">
+          <li>1 Dispositivo en uso</li>
+          <li>Catálogo completo de HBO</li>
+          <li>Soporte inmediato</li>
+        </ul>
+      </div>
+      <button class="btn" onclick="openModal('Max (HBO)', 5000)">Comprar Ahora</button>
+    </div>
+
+    <!-- Combo especial -->
+    <div class="card">
+      <span class="card-badge">Ahorro Especial</span>
+      <div>
+        <h2 class="service-title combo">Combo Duo</h2>
+        <div class="price">$8.000 <span>/ mes</span></div>
+        <ul class="features">
+          <li>Netflix + Max (HBO)</li>
+          <li>1 Dispositivo por servicio</li>
+          <li>Precio promocional exclusivo</li>
+        </ul>
+      </div>
+      <button class="btn" onclick="openModal('Combo Netflix + Max', 8000)">Comprar Combo</button>
+    </div>
+
+    <!-- Disney+ Proximamente -->
+    <div class="card">
+      <span class="card-badge tag-proximamente">Próximamente</span>
+      <div>
+        <h2 class="service-title disney">Disney+</h2>
+        <div class="price">$6.000 <span>/ mes</span></div>
+        <ul class="features">
+          <li>Disponible muy pronto</li>
+          <li>Consultar pedidos anticipados</li>
+        </ul>
+      </div>
+      <button class="btn btn-secondary" onclick="solicitarPrivado('Disney+')">Pedir al privado</button>
+    </div>
+
+    <!-- Paramount+ Proximamente -->
+    <div class="card">
+      <span class="card-badge tag-proximamente">Próximamente</span>
+      <div>
+        <h2 class="service-title" style="color: #0066ff;">Paramount+</h2>
+        <div class="price">En catálogo</div>
+        <ul class="features">
+          <li>Estrenos y deportes en vivo</li>
+          <li>Disponible bajo pedido</li>
+        </ul>
+      </div>
+      <button class="btn btn-secondary" onclick="solicitarPrivado('Paramount+')">Pedir al privado</button>
+    </div>
+  </div>
+
+  <!-- Modal Checkout Mercado Pago -->
+  <div class="modal-overlay" id="checkoutModal">
+    <div class="modal-card">
+      <button class="modal-close" onclick="closeModal()">✕</button>
+      <h3 id="modalProductTitle" style="font-size: 1.4rem; margin-bottom: 0.5rem;">Confirmar Pedido</h3>
+      <p style="color: var(--subtext); font-size: 0.9rem;">Método de Pago: <strong>Mercado Pago</strong></p>
+
+      <div class="alias-box">
+        <div class="alias-title">Tu Alias de Mercado Pago</div>
+        <div class="alias-value" id="aliasValue">MGE.SHOP.MP</div>
+        <button onclick="copiarAlias()" style="background: none; border: none; color: var(--accent); font-size: 0.8rem; cursor: pointer; font-weight: bold;">[ Copiar Alias ]</button>
+      </div>
+
+      <p style="font-size: 0.85rem; color: var(--subtext); margin-bottom: 0.8rem;">
+        1. Transfiere el monto exacto a nuestro Alias.<br>
+        2. Adjunta tu comprobante aquí o envíalo directamente por WhatsApp al <strong>11 33265205</strong> para recibir tu cuenta al instante.
+      </p>
+
+      <div class="file-input-wrapper">
+        <label for="comprobanteInput" class="file-label" id="fileLabel">📎 Adjuntar comprobante (Opcional)</label>
+        <input type="file" id="comprobanteInput" accept="image/*,.pdf" onchange="updateFileName(this)">
+      </div>
+
+      <button class="btn" style="background: #25d366; color: #000; font-weight: 800;" onclick="sendWhatsApp()">
+        Reclamar Compra en WhatsApp
+      </button>
+    </div>
+  </div>
+
+  <script>
+    let currentProduct = '';
+    let currentPrice = 0;
+    const PHONE_NUMBER = "5491133265205"; // Número formateado para WhatsApp
+
+    function openModal(product, price) {
+      currentProduct = product;
+      currentPrice = price;
+      document.getElementById('modalProductTitle').innerText = product + " - $" + price;
+      document.getElementById('checkoutModal').style.display = 'flex';
+    }
+
+    function closeModal() {
+      document.getElementById('checkoutModal').style.display = 'none';
+    }
+
+    function copiarAlias() {
+      const alias = document.getElementById('aliasValue').innerText;
+      navigator.clipboard.writeText(alias);
+      alert("¡Alias copiado al portapapeles!");
+    }
+
+    function updateFileName(input) {
+      const label = document.getElementById('fileLabel');
+      if (input.files.length > 0) {
+        label.innerText = "✓ Comprobante cargado: " + input.files[0].name;
+        label.style.borderColor = "#00ff88";
+        label.style.color = "#00ff88";
+      }
+    }
+
+    function sendWhatsApp() {
+      const message = `Hola MGE Shop! Quiero solicitar la compra de *${currentProduct}* ($${currentPrice}). Ya realicé la transferencia por Mercado Pago. Te adjunto el comprobante.`;
+      const url = `https://wa.me/${PHONE_NUMBER}?text=${encodeURIComponent(message)}`;
+      window.open(url, '_blank');
+    }
+
+    function solicitarPrivado(servicio) {
+      const message = `Hola MGE Shop! Estoy interesado en contratar el servicio de *${servicio}* al privado.`;
+      const url = `https://wa.me/${PHONE_NUMBER}?text=${encodeURIComponent(message)}`;
+      window.open(url, '_blank');
+    }
+  </script>
+</body>
+</html>
